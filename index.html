@@ -7,14 +7,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
     /* Global Styles */
-    body { font-family: 'Roboto', sans-serif; margin:0; padding:0; background:#f9f9f9; color:#333; scroll-behavior: smooth; }
+    body { font-family: 'Roboto', sans-serif; margin:0; padding:0; background:#0a0a0a; color:#fff; scroll-behavior: smooth; overflow-x:hidden; }
     a { text-decoration:none; color: inherit; }
     * { box-sizing: border-box; }
 
+    /* Canvas Background */
+    #bgCanvas { position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1; }
+
     /* Header */
-    header { background:#1a1a1a; color:#fff; padding:20px 0; position: fixed; width: 100%; top:0; z-index: 1000; text-align:center; }
-    header h1 { margin:0; font-size:2em; }
-    #typewriter { font-size:1.2em; margin:5px 0; color:#00bcd4; min-height:1.2em; }
+    header { background:rgba(26,26,26,0.85); padding:13px 0; position: fixed; width: 100%; top:0; z-index: 1000; text-align:center; }
+    header h1 { margin:0; font-size:2em; color:#7eeff8; }
+    #typewriter { font-size:1.2em; margin:5px 0; color:#00ffff; min-height:1.2em; }
 
     nav { margin-top:10px; }
     nav a { margin:0 15px; font-weight:bold; color:#fff; transition: color 0.3s; }
@@ -22,13 +25,14 @@
 
     /* Sections */
     section { padding:100px 20px 60px; max-width:1000px; margin:auto; opacity:0; transform: translateY(50px); transition: all 0.8s ease-out; }
-    h2 { color:#222; margin-bottom:20px; text-align:center; }
+
+    h2 { color:#eb4155; margin-bottom:20px; text-align:center; text-shadow:0 0 10px #f84c4c; }
 
     /* Skill Bars */
     .skill { max-width:700px; margin:auto; }
     .skill p { margin:5px 0 2px; font-weight:bold; }
-    .skill-bar { background:#ddd; border-radius:20px; overflow:hidden; height:15px; margin-bottom:15px; }
-    .skill-fill { height:100%; width:0; background:#00bcd4; border-radius:20px; transition: width 1.5s ease-in-out; }
+    .skill-bar { background:#222; border-radius:20px; overflow:hidden; height:15px; margin-bottom:15px; }
+    .skill-fill { height:100%; width:0; background:#00ffff; border-radius:20px; transition: width 1.5s ease-in-out; }
 
     /* Projects */
     .projects-container { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
@@ -38,33 +42,36 @@
     .flip-card-front, .flip-card-back {
       position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius:10px; overflow:hidden;
       display:flex; flex-direction:column; justify-content:center; align-items:center; padding:15px;
-      box-shadow:0 4px 10px rgba(0,0,0,0.1); transition: transform 0.3s;
+      box-shadow:0 4px 10px rgba(255,0,255,0.4); transition: transform 0.3s;
     }
-    .flip-card-front { background:#fff; }
+    .flip-card-front { background:#111; }
     .flip-card-front img { width:100%; border-radius:8px; margin-bottom:10px; }
-    .flip-card-back { background:#00bcd4; color:#fff; transform: rotateY(180deg); }
+    .flip-card-back { background:#ff00ff; color:#0a0a0a; transform: rotateY(180deg); }
 
     .badges img { margin:3px; }
 
     /* Stats Counter */
     .stats { text-align:center; margin:20px 0; }
-    .stats h3 { font-size:2em; margin:0; color:#00bcd4; }
+    .stats h3 { font-size:2em; margin:0; color:#00ffff; }
 
     /* Contact */
     .contact-links { text-align:center; max-width:400px; margin:auto; }
-    .contact-links a { display:block; margin:5px 0; color:#1a1a1a; font-weight:bold; transition: color 0.3s; }
-    .contact-links a:hover { color:#00bcd4; }
-    .resume-btn { background:#00bcd4; color:#fff; padding:10px 15px; border-radius:5px; display:inline-block; margin-top:10px; transition: transform 0.3s; }
+    .contact-links a { display:block; margin:5px 0; color:#fff; font-weight:bold; transition: color 0.3s; }
+    .contact-links a:hover { color:#00ffff; }
+    .resume-btn { background:#00ffff; color:#0a0a0a; padding:10px 15px; border-radius:5px; display:inline-block; margin-top:10px; transition: transform 0.3s; }
     .resume-btn:hover { transform: scale(1.05); }
 
     /* Footer */
-    footer { background:#1a1a1a; color:#fff; text-align:center; padding:20px; margin-top:40px; }
+    footer { background:rgba(26,26,26,0.85); color:#fff; text-align:center; padding:20px; margin-top:40px; }
 
     /* Responsive */
     @media(max-width:700px){ .projects-container { flex-direction:column; align-items:center; } }
+
   </style>
 </head>
 <body>
+
+<canvas id="bgCanvas"></canvas>
 
 <header>
   <h1>P SANDEEP YADAV</h1>
@@ -107,7 +114,7 @@
   </div>
   <div class="projects-container">
     <!-- Project 1 -->
-    <div class="flip-card">
+       <div class="flip-card">
       <div class="flip-card-inner">
         <div class="flip-card-front">
           <img src="traffic_demo.png" alt="Adaptive Traffic Flow">
@@ -182,6 +189,8 @@
         </div>
       </div>
     </div>
+
+    <!-- Add remaining projects similarly -->
   </div>
 </section>
 
@@ -243,6 +252,75 @@
       }
     });
   });
+
+  // Punk-style animated background
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let nodes = [];
+const nodeCount = 80;
+const color = '#00ffff'; // neon blue
+
+// Create nodes
+for(let i=0;i<nodeCount;i++){
+    nodes.push({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height,
+        vx: (Math.random()-0.5)*1.2,
+        vy: (Math.random()-0.5)*1.2
+    });
+}
+
+function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    // Draw nodes
+    nodes.forEach(n=>{
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, 2, 0, Math.PI*2);
+        ctx.fillStyle = color;
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 10;
+        ctx.fill();
+    });
+
+    // Connect nodes with lines
+    for(let i=0;i<nodes.length;i++){
+        for(let j=i+1;j<nodes.length;j++){
+            let dx = nodes[i].x - nodes[j].x;
+            let dy = nodes[i].y - nodes[j].y;
+            let dist = Math.sqrt(dx*dx + dy*dy);
+            if(dist < 120){
+                ctx.beginPath();
+                ctx.moveTo(nodes[i].x, nodes[i].y);
+                ctx.lineTo(nodes[j].x, nodes[j].y);
+                ctx.strokeStyle = 'rgba(0,255,255,'+(1-dist/120)+')';
+                ctx.lineWidth = 1;
+                ctx.shadowColor = color;
+                ctx.shadowBlur = 5;
+                ctx.stroke();
+            }
+        }
+    }
+
+    // Move nodes
+    nodes.forEach(n=>{
+        n.x += n.vx;
+        n.y += n.vy;
+        if(n.x < 0 || n.x > canvas.width) n.vx *= -1;
+        if(n.y < 0 || n.y > canvas.height) n.vy *= -1;
+    });
+
+    requestAnimationFrame(draw);
+}
+draw();
+
+// Resize canvas on window resize
+window.addEventListener('resize', ()=>{
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}); 
 </script>
 
 </body>
