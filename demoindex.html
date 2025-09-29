@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P SANDEEP YADAV | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Global Styles */
+    body { font-family: 'Roboto', sans-serif; margin:0; padding:0; background:#0a0a0a; color:#fff; scroll-behavior: smooth; overflow-x:hidden; }
+    a { text-decoration:none; color: inherit; }
+    * { box-sizing: border-box; }
+
+    /* Canvas Background */
+    #bgCanvas { position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1; }
+
+    /* Header */
+    header { background:rgba(26,26,26,0.85); padding:13px 0; position: fixed; width: 100%; top:0; z-index: 1000; text-align:center; }
+    header h1 { margin:0; font-size:2em; color:#7eeff8; }
+    #typewriter { font-size:1.2em; margin:5px 0; color:#00ffff; min-height:1.2em; }
+
+    nav { margin-top:10px; }
+    nav a { margin:0 15px; font-weight:bold; color:#fff; transition: color 0.3s; }
+    nav a:hover { color:#00bcd4; }
+
+    /* Sections */
+    section { padding:100px 20px 60px; max-width:1000px; margin:auto; opacity:0; transform: translateY(50px); transition: all 0.8s ease-out; }
+
+    h2 { color:#eb4155; margin-bottom:20px; text-align:center; text-shadow:0 0 10px #f84c4c; }
+
+    /* Skill Bars */
+    .skill { max-width:700px; margin:auto; }
+    .skill p { margin:5px 0 2px; font-weight:bold; }
+    .skill-bar { background:#222; border-radius:20px; overflow:hidden; height:15px; margin-bottom:15px; }
+    .skill-fill { height:100%; width:0; background:#00ffff; border-radius:20px; transition: width 1.5s ease-in-out; }
+
+    /* Projects */
+    .projects-container { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
+    .flip-card { background-color: transparent; width: 300px; height: 320px; perspective: 1000px; }
+    .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
+    .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+    .flip-card-front, .flip-card-back {
+      position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius:10px; overflow:hidden;
+      display:flex; flex-direction:column; justify-content:center; align-items:center; padding:15px;
+      box-shadow:0 4px 10px rgba(255,0,255,0.4); transition: transform 0.3s;
+    }
+    .flip-card-front { background:#111; }
+    .flip-card-front img { width:100%; border-radius:8px; margin-bottom:10px; }
+    .flip-card-back { background:#ff00ff; color:#0a0a0a; transform: rotateY(180deg); }
+
+    .badges img { margin:3px; }
+
+    /* Stats Counter */
+    .stats { text-align:center; margin:20px 0; }
+    .stats h3 { font-size:2em; margin:0; color:#00ffff; }
+
+    /* Contact */
+    .contact-links { text-align:center; max-width:400px; margin:auto; }
+    .contact-links a { display:block; margin:5px 0; color:#fff; font-weight:bold; transition: color 0.3s; }
+    .contact-links a:hover { color:#00ffff; }
+    .resume-btn { background:#00ffff; color:#0a0a0a; padding:10px 15px; border-radius:5px; display:inline-block; margin-top:10px; transition: transform 0.3s; }
+    .resume-btn:hover { transform: scale(1.05); }
+
+    /* Footer */
+    footer { background:rgba(26,26,26,0.85); color:#fff; text-align:center; padding:20px; margin-top:40px; }
+
+    /* Responsive */
+    @media(max-width:700px){ .projects-container { flex-direction:column; align-items:center; } }
+
+  </style>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<header>
+  <h1>P SANDEEP YADAV</h1>
+  <p id="typewriter"></p>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section id="about">
+  <h2>About Me</h2>
+  <p style="text-align:center; max-width:700px; margin:auto;">Hi! I’m P SANDEEP YADAV, a B.Tech CSE student specializing in AI & Robotics. I build intelligent systems using Machine Learning, Computer Vision, and NLP to solve real-world problems.</p>
+</section>
+
+<section id="skills">
+  <h2>Skills</h2>
+  <div class="skill">
+    <p>Python</p>
+    <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+
+    <p>Machine Learning</p>
+    <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+
+    <p>Computer Vision</p>
+    <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+
+    <p>Web Development</p>
+    <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+  </div>
+</section>
+
+<section id="projects">
+  <h2>Projects</h2>
+  <div class="stats">
+    <h3 id="projectsCount">0</h3>
+    <p>Projects Completed</p>
+  </div>
+  <div class="projects-container">
+    <!-- Project 1 -->
+    <div class="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <img src="traffic_demo.png" alt="Adaptive Traffic Flow">
+          <h3>Adaptive Traffic Flow</h3>
+        </div>
+        <div class="flip-card-back">
+          <p>Real-time traffic optimization using YOLO & LSTM.</p>
+          <p><strong>Tech:</strong> Python, YOLOv5, LSTM, OpenCV</p>
+          <p class="badges">
+            <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white">
+            <img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white">
+            <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white">
+          </p>
+          <a href="https://github.com/yourusername/traffic-flow" target="_blank">GitHub Repo</a>
+        </div>
+      </div>
+    </div>
+    <!-- Add remaining projects similarly -->
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <div class="contact-links">
+    <a href="mailto:yourname@example.com">Email: yourname@example.com</a>
+    <a href="https://linkedin.com/in/yourname" target="_blank">LinkedIn</a>
+    <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+    <a href="Resume.pdf" download class="resume-btn">Download Resume</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 P SANDEEP YADAV | Built with ❤️ using GitHub Pages</p>
+</footer>
+
+<script>
+  // Typewriter
+  const text = "AI & Robotics | ML | Computer Vision";
+  let i = 0;
+  function typeWriter() {
+    if(i<text.length){
+      document.getElementById("typewriter").innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter,100);
+    }
+  }
+  typeWriter();
+
+  // Fade-in sections
+  const sections = document.querySelectorAll('section');
+  window.addEventListener('scroll', () => {
+    const scrollPos = window.scrollY + window.innerHeight - 100;
+    sections.forEach(sec => {
+      if(scrollPos > sec.offsetTop){
+        sec.style.opacity = 1;
+        sec.style.transform = 'translateY(0)';
+      }
+    });
+  });
+
+  // Project counter
+  let count=0;
+  const target=4;
+  const interval=setInterval(()=>{
+    if(count<target){count++;document.getElementById('projectsCount').innerText=count;}
+    else clearInterval(interval);
+  },300);
+
+  // Skill bar animation
+  const skillBars=document.querySelectorAll('.skill-fill');
+  window.addEventListener('scroll',()=>{
+    const scrollPos=window.scrollY+window.innerHeight-100;
+    skillBars.forEach(bar=>{
+      const parentTop=bar.parentElement.offsetTop;
+      if(scrollPos>parentTop){
+        bar.style.width=bar.getAttribute('style').match(/\d+/)[0]+'%';
+      }
+    });
+  });
+
+  // Punk-style animated background
+  const canvas=document.getElementById('bgCanvas');
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+
+  const particles=[];
+  const colors=['#ff00ff','#00ffff','#ff9900','#00ff00','#ff0055'];
+  for(let i=0;i<120;i++){
+    particles.push({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height,
+      vx: (Math.random()-0.5)*2,
+      vy: (Math.random()-0.5)*2,
+      radius: Math.random()*2+1,
+      color: colors[Math.floor(Math.random()*colors.length)]
+    });
+  }
+
+  function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>canvas.width) p.vx*=-1;
+      if(p.y<0||p.y>canvas.height) p.vy*=-1;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
+      ctx.fillStyle=p.color;
+      ctx.fill();
+    });
+    // draw lines
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        let dx=particles[i].x-particles[j].x;
+        let dy=particles[i].y-particles[j].y;
+        let dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<100){
+          ctx.beginPath();
+          ctx.strokeStyle='rgba(255,0,255,'+(1-dist/100)+')';
+          ctx.moveTo(particles[i].x,particles[i].y);
+          ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  window.addEventListener('resize',()=>{
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+  });
+</script>
+
+</body>
+</html>
